@@ -9,7 +9,7 @@ export default class UsersService {
 
     private users_repository: Repository<User>
 
-    constructor(){
+    constructor() {
         this.users_repository = getCustomRepository(UsersRepository);
     }
     async create(email: string) {
@@ -23,11 +23,16 @@ export default class UsersService {
         }
 
         const user = this.users_repository.create({
-           email
+            email
         });
 
         await this.users_repository.save(user);
 
+        return user;
+    }
+
+    async findByEmail(email: string) {
+        const user = await this.users_repository.findOne({ email })
         return user;
     }
 }
