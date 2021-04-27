@@ -1,52 +1,61 @@
-import { getCustomRepository, Repository } from 'typeorm';
-import Setting from '../entities/SettingsEntities';
-import SettingsRepository from '../repositories/SettingsRepositories';
+//Mission Complete
+import { getCustomRepository, Repository } from "typeorm";
+import { Setting } from "../entities/Settings";
+import { SettingsRepository } from "../repositories/SettingsRepository"
+
+
 
 interface ISettingsCreate {
-    chat: boolean;
-    username: string;
+  chat: boolean;
+  username: string;
 }
 
-export default class SettingsService {
+class SettingsService {
 
-    private settings_repository: Repository<Setting>;
+  private settingsRepository: Repository<Setting>;
 
-    constructor(){
-        this.settings_repository = getCustomRepository(SettingsRepository);
+  constructor() {
+    this.settingsRepository = getCustomRepository(SettingsRepository);
+  }
+
+  async create({ chat, username }: ISettingsCreate) {
+
+    const userAlreadyExist = await this.settingsRepository.findOne({ username, });
+
+
+    if (userAlreadyExist) {
+      throw new Error("User already exist");
     }
 
-    async create({ chat, username }: ISettingsCreate) {
+    const settings = this.settingsRepository.create({ chat, username });
+
+    await this.settingsRepository.save(settings);
+
+    return (settings);
+  }
+
+  async findByUsername(username: string) {
+    const settings = await this.settingsRepository.findOne({ username, });
+    return settings
+  }
 
 
-        const user_already_exists = await this.settings_repository.findOne({
-            username
-        });
+  async update(username: string, chat: boolean) {
+    const settings = await this.settingsRepository
+      .createQueryBuilder()
+      .update(Setting)
+      .set({ chat })
+      .where("username = :username", {
+        username,
+      })
+      .execute();
+  }
 
-        if(user_already_exists){
-            throw new Error('User already exists!');
-        }
 
-        const settings = this.settings_repository.create({
-            chat,
-            username
-        });
 
-        await this.settings_repository.save(settings);
 
-        return settings;
-    }
 
-    async findByUsername(username: string){
-        const settings = await this.settings_repository.findOne({
-            username
-        });
 
-        return settings;
-    }
-
-    async update(username: string, chat: boolean){
-        const settings = await this.settings_repository.createQueryBuilder().update(Setting).set({chat}).where("username = :username", {
-            username
-        }).execute();
-    }   
 }
+
+export { SettingsService }

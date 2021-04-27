@@ -1,20 +1,29 @@
 
-import { Router } from 'express';
-import MessagesController from './controllers/MessagesController';
-import SettingsController from './controllers/SettingsController';
-import UsersController from './controllers/UsersControllers';
+import { Router } from "express";
+import { SettingsController } from "./controllers/SettingsController";
+import { UsersController } from "./controllers/UsersController";
+import { MessagesController } from "./controllers/MessagesController";
 
 const routes = Router();
 
-const settings_controller = new SettingsController();
-const users_controller = new UsersController();
-const message_controller = new MessagesController();
+const settingsController = new SettingsController();
+const usersController = new UsersController();
+const messagesController = new MessagesController();
 
-routes.post('/settings', settings_controller.create);
-routes.get('/settings/:username', settings_controller.findByUsername);
-routes.put('/settings/:username', settings_controller.update);
-routes.post('/users', users_controller.create);
-routes.post('/messages', message_controller.create);
-routes.get('/messages/:id', message_controller.show_by_user);
+routes.post("/settings", settingsController.create);
+routes.get("/settings/:username", settingsController.findByUsername);
+routes.put("/settings/:username", settingsController.update);
 
-export default routes;
+
+routes.post("/users", usersController.create);
+
+
+routes.post("/messages", messagesController.create);
+routes.get("/messages/:id", messagesController.showByUser);
+
+
+export { routes }
+
+
+
+

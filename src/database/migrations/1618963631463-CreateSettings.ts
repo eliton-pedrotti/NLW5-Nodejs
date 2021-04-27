@@ -1,7 +1,8 @@
-import { query } from "express";
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+//Mission Complete
+//para criar a migration rodei no console o yarn typeform "migration:create"  (funcionalidade do typeorm) -n CreateSettings (Nome Definido por mim)
 
-export class CreateSettings1618966952200 implements MigrationInterface {
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
+export class CreateSettings1618963631463 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -15,12 +16,12 @@ export class CreateSettings1618966952200 implements MigrationInterface {
                     },
                     {
                         name: "username",
-                        type: "varchar"
+                        type: "varchar",
                     },
                     {
                         name: "chat",
                         type: "boolean",
-                        default: true
+                        default: true,
                     },
                     {
                         name: "updated_at",
@@ -31,14 +32,16 @@ export class CreateSettings1618966952200 implements MigrationInterface {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()"
-                    }
+                    },
                 ]
             })
-        )
-    }
 
+        )
+
+    }
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("settings")
+        await queryRunner.dropTable("settings");
+
     }
 
 }

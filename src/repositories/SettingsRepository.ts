@@ -1,13 +1,13 @@
 //Mission Complete
 import {EntityRepository, Repository} from "typeorm";
-import { Users } from "../entities/Users";
+import { Setting } from "../entities/Settings";
 
 
-@EntityRepository(Users)
+@EntityRepository(Setting)
 //o extends pega os métodos que estão dentro do Repository e extende para nossa class SettingRepository
-class UsersRepository extends Repository<Users> {
+class SettingsRepository extends Repository<Setting> {
 
 }
 
 
-export {UsersRepository};
+export {SettingsRepository};

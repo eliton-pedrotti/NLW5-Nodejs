@@ -1,34 +1,33 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import MessagesService from '../services/MessageService';
+import { MessagesService } from "../services/MessagesService";
 
-export default class MessagesController {
-    async create(req: Request, res: Response) {
+class MessagesController {
 
-        const { admin_id, text, user_id } = req.body;
+  async create(request: Request, response: Response) {
+
+    const { admin_id, text, user_id } = request.body
+
+    const messagesService = new MessagesService()
+
+    const message = await messagesService.create({ admin_id, text, user_id });
+
+    return response.json(message);
+  }
+
+  async showByUser(request: Request, response: Response) {
+
+    const { id } = request.params;
+
+    const messagesService = new MessagesService()
+
+    const list = await messagesService.listByUser(id);
+
+    return response.json(list)
+
+  }
 
 
-        const messages_service = new MessagesService();
-
-        const message = await messages_service.create({
-            admin_id,
-            text,
-            user_id
-
-        })
-
-        return res.json(message);
-
-    }
-
-    async show_by_user(req: Request, res: Response) {
-        const { id } = req.params;
-
-        const messages_service = new MessagesService();
-
-        const list = await messages_service.list_by_user(id);
-
-        return res.json(list);
-
-    }
 }
+
+export { MessagesController }

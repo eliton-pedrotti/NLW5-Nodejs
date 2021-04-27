@@ -1,7 +1,8 @@
-import { http } from './http';
-import './websocket/client';
-import './websocket/admin';
+//Mission Complete
+import { http } from "./http"
 
-http.listen(3333, () => {
-    console.log('Server is running!');
-});
+import "./websocket/client";
+import "./websocket/admin";
+
+http.listen(3333, () => console.log("Server is Running on 3333"))
+

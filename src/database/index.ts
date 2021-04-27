@@ -1,3 +1,4 @@
-import { createConnection } from 'typeorm';
+//Mission Complete
+import { createConnection } from "typeorm";
 
 createConnection();
